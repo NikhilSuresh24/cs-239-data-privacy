@@ -5,7 +5,6 @@ const targetUrl = "https://www.facebook.com/privacy/policy";
 function detectSpecificLink() {
     const links = document.getElementsByTagName('a');
     const pp = document.querySelectorAll('a[href="https://www.facebook.com/privacy/policy"]');
-    console.log(pp);
 
     for (link of links) {
         if (link.href.toLowerCase().includes('privacy')) {
@@ -18,4 +17,5 @@ function detectSpecificLink() {
 
 // Run the detection function when the page loads
 detectSpecificLink();
+
 
