@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <h1>Privacy Policy Analysis</h1>
+    <div id="data-display"></div>
+    <script>
+      chrome.storage.local.get(['scrapedData'], (result) => {
+          if (result.scrapedData) {
+              document.getElementById("data-display").textContent = result.scrapedData;
+          }
+      });
+    </script>
+  </body>
+</html>

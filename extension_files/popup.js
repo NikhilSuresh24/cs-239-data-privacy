@@ -9,5 +9,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       document.getElementById("data-display").textContent = "Error: " + message.error;
     }
 
-    chrome.action.openPopup()
+    console.log(message.data)
   });

@@ -8,7 +8,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.instagram.com/*", "https://www.facebook.com/*"], 
+      "matches": ["https://www.instagram.com/*", 
+                "https://www.facebook.com/*", 
+                "https://www.tiktok.com/*"], 
       "js": ["scripts/content.js"]       
     }
   ],
@@ -17,3 +19,7 @@
     "default_icon": "hello_extensions.png"
   }
 }
+
+
+//NOTE: 
+//tik tok is hard to monitor since there is no new url for sign up, just a popup feature.
