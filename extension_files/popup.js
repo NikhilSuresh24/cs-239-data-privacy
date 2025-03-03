@@ -1,13 +1,23 @@
-console.log("This is a popup!")
+console.log("This is a popup!");
 
+document.addEventListener('DOMContentLoaded', function() {
+    chrome.storage.local.get(['scrapedData', 'summary'], function(result) {
+        if (result.summary) {
+            document.getElementById('summary').textContent = result.summary;
+        } else {
+            document.getElementById('summary').textContent = 'No summary available';
+        }
+
+        if (result.scrapedData) {
+            document.getElementById('data-display').textContent = result.scrapedData;
+        } else {
+            document.getElementById('data-display').textContent = 'No data available';
+        }
+    });
+});
+
+// Keep the message listener for potential future use or remove if not needed
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "displayData") {
-      // Update the popup with the fetched data
-      document.getElementById("data-display").textContent = message.data;
-    } else if (message.action === "displayError") {
-      // Handle any errors (e.g., display error message in popup)
-      document.getElementById("data-display").textContent = "Error: " + message.error;
-    }
-
-    console.log(message.data)
-  });
+    console.log("Received message:", message);
+    // Handle any additional message-based functionality here
+});

@@ -1,3 +1,4 @@
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Inside background.js");
 
@@ -8,12 +9,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         fetch(scrape_url)  // Calls the Puppeteer server
             .then(response => response.json())
             .then(data => {
-                console.log("Scraped data received:", data);
+                console.log("Scraped data and summary received:", data);
                 // Store the data
-                chrome.storage.local.set({ 'scrapedData': data.data });
+                chrome.storage.local.set({ 
+                    'scrapedData': data.data,
+                    'summary': data.summary
+                });
                 // Update the popup to use the data HTML
                 chrome.action.setPopup({
-                    popup: 'data.html'
+                    popup: 'hello.html'
                 });
             })
             .catch(error => {
