@@ -1,7 +1,7 @@
 const express = require("express");
 const puppeteer = require("puppeteer");
 const cors = require("cors");
-const { summarizeContent, splitSummary } = require("../summarizer.js");
+const { summarizeContent, splitSummary } = require("./summarizer.js");
 
 const app = express();
 app.use(cors());
@@ -26,11 +26,17 @@ app.get("/scrape", async (req, res) => {
         // Generate summary
         const summary = await summarizeContent(scrapedData);
         const titlesAndSummaries = splitSummary(summary);
-        console.log(summary);
-        console.log(titlesAndSummaries);
+        // console.log(summary);
+        // console.log(titlesAndSummaries);
+        console.log("Sending Response:", JSON.stringify({
+            data: scrapedData,
+            summary: summary,
+            summary_list: titlesAndSummaries
+        }, null, 2));
+        
         
 
-        res.json({ data: scrapedData, summary: summary });
+        res.json({ data: scrapedData, summary: summary, summary_list: titlesAndSummaries });
 
         await browser.close();
 
