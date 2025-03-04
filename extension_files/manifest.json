@@ -4,7 +4,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/scripts/background.js"
   },
   "permissions": [
     "storage"
@@ -14,12 +14,12 @@
       "matches": ["https://www.instagram.com/*", 
                 "https://www.facebook.com/*", 
                 "https://www.tiktok.com/*"], 
-      "js": ["scripts/content.js"]       
+      "js": ["src/scripts/content.js"]       
     }
   ],
   "action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
+    "default_popup": "src/pages/index.html",
+    "default_icon": "src/assets/hello_extensions.png"
   }
 }
 

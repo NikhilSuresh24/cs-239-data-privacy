@@ -1,0 +1,99 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    overflow: hidden; /* Prevents scrolling of the body */
+}
+
+/* Container */
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 450px; /* Fixed width */
+    box-sizing: border-box; /* Ensures padding is included in the width */
+    overflow: visible; /* Ensures content can expand without clipping */
+    height: auto; /* Automatically adjusts height to fit the content */
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header h2 {
+    font-size: 18px;
+    margin: 0;
+    margin-right: 10px;
+}
+
+/* Close Button */
+.close-button {
+    background: none;
+    border: none;
+    font-size: 30px; /* Larger font size for visibility */
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-button:hover {
+    color: #d9534f; /* Red color on hover to indicate closeness */
+}
+
+/* Loading Message */
+.loading {
+    text-align: center;
+    font-size: 16px;
+    color: gray;
+}
+
+/* Rating Section */
+.rating-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.rating-info h3 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.rating-info p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Star Ratings */
+.stars {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.star {
+    font-size: 18px;
+    color: #ddd; /* Light gray for empty stars */
+}
+
+.star.filled {
+    color: #ffd700;
+}

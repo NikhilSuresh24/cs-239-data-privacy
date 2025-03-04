@@ -10,15 +10,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             .then(response => response.json())
             .then(data => {
                 console.log("Scraped data and summary received:", data);
+                console.log('sum list: ', data.summary_list)
                 // Store the data
                 chrome.storage.local.set({ 
                     'scrapedData': data.data,
-                    'summary': data.summary
+                    'summary': data.summary, 
+                    'summary_list': data.summary_list
                 });
-                // Update the popup to use the data HTML
-                chrome.action.setPopup({
-                    popup: 'hello.html'
-                });
+
+                console.log(chrome.storage.local)
+                // // Update the popup to use the data HTML
+                // chrome.action.setPopup({
+                //     popup: 'index.html'
+                // });
             })
             .catch(error => {
                 console.error("Error fetching scrape data:", error);
