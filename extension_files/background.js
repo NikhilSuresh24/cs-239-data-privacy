@@ -1,27 +1,49 @@
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log("Inside background.js");
+console.log("Background worker loaded");
 
-    if (message.linkFound) {
-        const scrape_url = `http://localhost:3000/scrape?url=${encodeURIComponent(message.url)}`;
-        console.log("Fetching:", scrape_url);
+// Privacy policy URLs mapped to platforms
+const privacyPages = {
+    "instagram": "https://www.facebook.com/privacy/policy",
+    "facebook": "https://www.facebook.com/privacy/policy",
+    "tiktok": "https://www.tiktok.com/legal/page/us/privacy-policy/en"
+};
 
-        fetch(scrape_url)  // Calls the Puppeteer server
-            .then(response => response.json())
-            .then(data => {
-                console.log("Scraped data received:", data);
-                // Store the data
-                chrome.storage.local.set({ 'scrapedData': data.data });
-                // Update the popup to use the data HTML
-                chrome.action.setPopup({
-                    popup: 'data.html'
+// Target pages where we should check for privacy policy links
+const targetPages = [
+    "https://www.instagram.com/accounts/emailsignup/",
+    "https://www.facebook.com/r.php?entry_point=login"
+];
+
+// Function to check if the page needs a privacy policy notification
+function checkAndNotify(tabId, pageUrl) {
+    console.log("Checking URL:", pageUrl);
+
+    if (targetPages.includes(pageUrl)) {
+        for (const [platform, privacyUrl] of Object.entries(privacyPages)) {
+            if (pageUrl.includes(platform)) {
+                console.log(`Privacy policy found for ${platform}: ${privacyUrl}`);
+
+                // Send message to content.js to display popup
+                chrome.tabs.sendMessage(tabId, { linkFound: true, url: privacyUrl }, (response) => {
+                    if (chrome.runtime.lastError) {
+                        console.error("Error sending message to content script:", chrome.runtime.lastError);
+                    } else {
+                        console.log("Message sent to content.js:", response);
+                    }
                 });
-            })
-            .catch(error => {
-                console.error("Error fetching scrape data:", error);
-                sendResponse({ data: "Error: " + error.message });
-            });
-
-        chrome.action.openPopup();
-        return true; // Indicates sendResponse will be used asynchronously
+                break;
+            }
+        }
     }
+}
+
+// Listen for tab updates (page load or navigation)
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === "complete" && tab.url) {
+        checkAndNotify(tabId, tab.url);
+    }
+});
+
+// Listen for completed navigation events (useful for single-page apps)
+chrome.webNavigation.onCompleted.addListener((details) => {
+    checkAndNotify(details.tabId, details.url);
 });
