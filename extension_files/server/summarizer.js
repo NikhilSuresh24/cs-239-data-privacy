@@ -1,7 +1,7 @@
 // summarizer.js
-const axios = require('axios');
+import axios from 'axios';
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 async function summarizeContent(content) {
@@ -53,4 +53,6 @@ function splitSummary(summary) {
     ]);
 }
 
-module.exports = { summarizeContent, splitSummary };
+export {summarizeContent, splitSummary};
+
+// module.exports = { summarizeContent, splitSummary };

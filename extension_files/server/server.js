@@ -1,7 +1,8 @@
-const express = require("express");
-const puppeteer = require("puppeteer");
-const cors = require("cors");
-const { summarizeContent, splitSummary } = require("../summarizer.js");
+import express from "express";
+import puppeteer from "puppeteer";
+import cors from "cors";
+import { summarizeContent, splitSummary } from "./summarizer.js";
+
 
 const app = express();
 app.use(cors());
