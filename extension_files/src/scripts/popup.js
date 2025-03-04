@@ -1,23 +1,10 @@
 console.log("This is a popup!");
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     chrome.storage.local.get(['scrapedData', 'summary'], function(result) {
-//         if (result.summary) {
-//             document.getElementById('summary').textContent = result.summary;
-//         } else {
-//             document.getElementById('summary').textContent = 'No summary available';
-//         }
-
-//         if (result.scrapedData) {
-//             document.getElementById('data-display').textContent = result.scrapedData;
-//         } else {
-//             document.getElementById('data-display').textContent = 'No data available';
-//         }
-//     });
-// });
-
 function loadSummaryUI(summary) {
-    const container = document.querySelector(".container");
+    // Check if we're in the content script (wrapper exists) or popup
+    const container = document.getElementById('privacy-notice-wrapper')?.querySelector('.container') || 
+                     document.querySelector(".container");
+                     
     console.log("summary loading: ", summary);
     // Create main UI structure
     let html = `
@@ -46,7 +33,13 @@ function loadSummaryUI(summary) {
 
     // Add event listeners again
     document.querySelector(".close-button").addEventListener("click", () => {
-        window.close();
+        // Check if we're in content script or popup
+        const wrapper = document.getElementById('privacy-notice-wrapper');
+        if (wrapper) {
+            wrapper.remove();  // In content script, remove the wrapper
+        } else {
+            window.close();    // In popup, close the window
+        }
     });
 
     // Render stars
@@ -100,3 +93,21 @@ document.addEventListener("DOMContentLoaded", () => {
     
 });
 
+
+
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     chrome.storage.local.get(['scrapedData', 'summary'], function(result) {
+//         if (result.summary) {
+//             document.getElementById('summary').textContent = result.summary;
+//         } else {
+//             document.getElementById('summary').textContent = 'No summary available';
+//         }
+
+//         if (result.scrapedData) {
+//             document.getElementById('data-display').textContent = result.scrapedData;
+//         } else {
+//             document.getElementById('data-display').textContent = 'No data available';
+//         }
+//     });
+// });

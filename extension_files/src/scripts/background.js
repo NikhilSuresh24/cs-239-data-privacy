@@ -28,8 +28,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 console.error("Error fetching scrape data:", error);
                 sendResponse({ data: "Error: " + error.message });
             });
-
-        chrome.action.openPopup();
         return true; // Indicates sendResponse will be used asynchronously
     }
 });

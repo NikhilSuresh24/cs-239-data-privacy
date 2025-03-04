@@ -14,13 +14,20 @@
       "matches": ["https://www.instagram.com/*", 
                 "https://www.facebook.com/*", 
                 "https://www.tiktok.com/*"], 
-      "js": ["src/scripts/content.js"]       
+      "js": ["src/scripts/content.js",
+              "src/scripts/popup.js"
+            ]       
     }
   ],
   "action": {
     "default_popup": "src/pages/index.html",
     "default_icon": "src/assets/hello_extensions.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.html"],
+      "matches": ["<all_urls>"]
+  }]
 }
 
 
