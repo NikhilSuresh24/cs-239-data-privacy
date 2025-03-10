@@ -1,7 +1,7 @@
 // summarizer.js
 const axios = require('axios');
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 async function summarizeContent(content) {
