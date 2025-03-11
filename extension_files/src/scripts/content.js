@@ -63,7 +63,7 @@ function checkAndNotify() {
         for (const [platform, url] of Object.entries(privacyPages)) {
             if (currentUrl.includes(platform)) {
                 injectPrivacyNotice(url);
-                chrome.runtime.sendMessage({ linkFound: true, url: url });
+                // chrome.runtime.sendMessage({ linkFound: true, url: url });
                 break;
             }
         }
