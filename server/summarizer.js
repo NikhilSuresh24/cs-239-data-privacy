@@ -1,7 +1,7 @@
 // summarizer.js
 const axios = require('axios');
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 // async function summarizeContent(content) {
@@ -122,15 +122,14 @@ async function analyzeSummary(summary) {
 async function summarizeContent(content) {
     console.log("Inside summarizer.js");
     const initialSummary = await getInitialSummary(content);
-    console.log(initialSummary);
     const analyzedSummary = await analyzeSummary(initialSummary);
-    console.log(analyzedSummary);
     return analyzedSummary;
 }
 
 function splitSummary(summary) {
-    const regex = /\*\*(.*?)\*\*\nSummary: \* (.*?)\nPrivacy Rating: (\d)\nLearn More: (.*?)\n\n/g;
+    const regex = /\*\*(.*?)\*\*\nSummary: \* (.*?)\nPrivacy Rating: (\d)\nLearn More: ([\s\S]*?)(?=\n\n\*\*|$)/g;
     const matches = [...summary.matchAll(regex)];
+    console.log(matches);
     return matches.map(match => [
         match[1].trim(),  // Title
         match[2].trim(),  // Summary
@@ -138,5 +137,7 @@ function splitSummary(summary) {
         match[4].trim()  // Learn More
     ]);
 }
+
+
 
 module.exports = { summarizeContent, splitSummary };
