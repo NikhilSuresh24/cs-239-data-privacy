@@ -25,6 +25,7 @@ body {
     height: auto; /* Automatically adjusts height to fit the content */
     max-height: 80vh; /* Limits height to 80% of viewport */
     overflow-y: auto;
+    color: black;
 }
 
 /* Container */
@@ -55,7 +56,8 @@ body {
 .header h2 {
     font-size: 18px;
     margin: 0;
-    width: 50%;
+    /* width: 50%; */
+    color: black;
 }
 
 /* Close Button */
@@ -97,6 +99,7 @@ body {
 
 .rating-info h3 {
     font-size: 16px;
+    color: black;
     margin: 0;
 }
 
