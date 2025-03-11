@@ -1,7 +1,7 @@
 // summarizer.js
 const axios = require('axios');
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 // async function summarizeContent(content) {
@@ -122,9 +122,7 @@ async function analyzeSummary(summary) {
 async function summarizeContent(content) {
     console.log("Inside summarizer.js");
     const initialSummary = await getInitialSummary(content);
-    console.log(initialSummary);
     const analyzedSummary = await analyzeSummary(initialSummary);
-    console.log(analyzedSummary);
     return analyzedSummary;
 }
 
