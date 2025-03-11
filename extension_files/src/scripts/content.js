@@ -19,16 +19,27 @@ function injectPrivacyNotice(priv_url) {
         .then(html => {
             const wrapper = document.createElement('div');
             wrapper.id = 'privacy-notice-wrapper';
-            wrapper.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                max-width: 400px;
-            `;
+            // wrapper.style.cssText = `
+            //     position: fixed;
+            //     top: 20px;
+            //     right: 20px;
+            //     z-index: 9999;
+            //     background: white;
+            //     border-radius: 8px;
+            //     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            //     max-width: 400px;
+            //     box-sizing: border-box; /* Ensures padding doesn't affect width */
+            //     padding: 20px;
+            //     margin: 15px; /* Adds space on the left and right */
+            //     overflow: visible; /* Ensures content can expand without clipping */
+            //     height: auto; /* Automatically adjusts height to fit the content */
+            // `;
+                
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = chrome.runtime.getURL('src/styles/index.css');
+            document.head.appendChild(link);        
             
             // Insert the HTML into the wrapper
             wrapper.insertAdjacentHTML('beforeend', html);

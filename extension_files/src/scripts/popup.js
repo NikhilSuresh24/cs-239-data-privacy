@@ -15,15 +15,19 @@ function loadSummaryUI(summary) {
     `;
 
     // Generate rating sections dynamically
-    summary.forEach(([title, description, rating], index) => {
+    summary.forEach(([title, one_liner, rating, description], index) => {
         console.log("ratings: ", title, description, rating)
+        ratingDescriptions = ["Horrible", "Bad", "Decent", "Good", "Excellent"];
         html += `
             <div class="rating-section">
                 <div class="rating-info">
                     <h3>${title}</h3>
-                    <p>${description}</p>
+                    <p class="one-liner" id="one-liner-${index}">${one_liner}</p>
+                    <p class="description" id="desc-${index}" style="display: none;">${description}</p>
+                    <button class="learn-more" data-index="${index}">Learn More</button>
                 </div>
                 <div class="stars" data-rating="${rating}"></div>
+                <p class=rating-desc id="rating-desc-${index}">${ratingDescriptions[rating - 1]}</p>
             </div>
         `;
     });
@@ -42,18 +46,53 @@ function loadSummaryUI(summary) {
         }
     });
 
+    document.querySelectorAll(".learn-more").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const index = event.target.getAttribute("data-index");
+            const descriptionElem = document.getElementById(`desc-${index}`);
+            const oneLinerElem = document.getElementById(`one-liner-${index}`);
+            
+            if (descriptionElem.style.display === "none") {
+                descriptionElem.style.display = "block";
+                oneLinerElem.style.display = "none";
+                event.target.textContent = "Hide";
+            } else {
+                descriptionElem.style.display = "none";
+                oneLinerElem.style.display = "block";
+                event.target.textContent = "Learn More";
+            }
+        });
+    });
+
+
     // Render stars
     document.querySelectorAll(".stars").forEach(container => {
         const rating = parseInt(container.getAttribute("data-rating"), 10);
         console.log("RATING: ", rating)
+        // for (let i = 1; i <= 5; i++) {
+        //     const star = document.createElement("span");
+        //     star.classList.add("star");
+        //     star.innerHTML = "★"; 
+        //     if (i <= rating) {
+        //         star.classList.add("filled");
+        //     }
+        //     container.appendChild(star);
+        // }
+        const ratingColors = ['#ff4d4d', '#ff9933', '#ffcc00', '#66cc66', '#009933']; // Red, Orange, Yellow, Green
         for (let i = 1; i <= 5; i++) {
-            const star = document.createElement("span");
-            star.classList.add("star");
-            star.innerHTML = "★"; 
-            if (i <= rating) {
-                star.classList.add("filled");
+            color = ratingColors[i - 1];
+            // const color = (i <= rating) ? ratingColors[i - 1] : '#e0e0e0'; // Gray for non-selected
+            const bar = document.createElement("div");
+            bar.classList.add("rating-bar");
+            bar.style.backgroundColor = color;  // Set the color based on rating
+            if (i == rating) {
+                const diamond = document.createElement("span");
+                diamond.textContent = "♦"; // Diamond symbol
+                diamond.style.fontSize = "24px";
+                diamond.style.color = "#000"; // You can choose the color of the diamond
+                bar.appendChild(diamond);
             }
-            container.appendChild(star);
+            container.appendChild(bar);
         }
     });
 }
@@ -92,22 +131,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
     
 });
-
-
-
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     chrome.storage.local.get(['scrapedData', 'summary'], function(result) {
-//         if (result.summary) {
-//             document.getElementById('summary').textContent = result.summary;
-//         } else {
-//             document.getElementById('summary').textContent = 'No summary available';
-//         }
-
-//         if (result.scrapedData) {
-//             document.getElementById('data-display').textContent = result.scrapedData;
-//         } else {
-//             document.getElementById('data-display').textContent = 'No data available';
-//         }
-//     });
-// });

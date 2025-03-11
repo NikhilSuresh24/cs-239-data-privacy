@@ -1,6 +1,6 @@
 {
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
+  "name": "PrivacyPal",
+  "description": "Your Pal For Everything Privacy",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
@@ -21,11 +21,11 @@
   ],
   "action": {
     "default_popup": "src/pages/index.html",
-    "default_icon": "src/assets/hello_extensions.png"
+    "default_icon": "src/assets/logo.png"
   },
   "web_accessible_resources": [
     {
-      "resources": ["*.html"],
+      "resources": ["*.html", "*.js", "*.css"],
       "matches": ["<all_urls>"]
   }]
 }
