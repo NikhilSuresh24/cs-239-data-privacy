@@ -1,4 +1,6 @@
 
+let isProcessing = false;
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Inside background.js");
 

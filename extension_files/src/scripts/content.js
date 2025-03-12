@@ -44,14 +44,9 @@ function injectPrivacyNotice(priv_url) {
             // Insert the HTML into the wrapper
             wrapper.insertAdjacentHTML('beforeend', html);
             document.body.appendChild(wrapper);
-            
-            //CALLS SUMMARY FETCH ONLY IF CLICKED
-            // document.getElementById('privacy-notice-wrapper').addEventListener('click', () => {
-            //     chrome.runtime.sendMessage({ linkFound: true, url: priv_url });
-            // });
 
             //CALLS SUMMARY FETCH ON PAGE LOAD
-            chrome.runtime.sendMessage({ linkFound: true, url: priv_url });
+            //chrome.runtime.sendMessage({ linkFound: true, url: priv_url });
         });
 }
 
@@ -63,7 +58,7 @@ function checkAndNotify() {
         for (const [platform, url] of Object.entries(privacyPages)) {
             if (currentUrl.includes(platform)) {
                 injectPrivacyNotice(url);
-                // chrome.runtime.sendMessage({ linkFound: true, url: url });
+                chrome.runtime.sendMessage({ linkFound: true, url: priv_url });
                 break;
             }
         }
