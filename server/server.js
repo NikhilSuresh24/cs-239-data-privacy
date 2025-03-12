@@ -19,15 +19,12 @@ app.get("/scrape", async (req, res) => {
         await page.goto(url, { waitUntil: "domcontentloaded" }); // Load page
         
         const scrapedData = await page.evaluate(() => document.body.innerText); 
-        
-        
-    
 
         // Generate summary
         const summary = await summarizeContent(scrapedData);
         const titlesAndSummaries = splitSummary(summary);
-        // console.log(summary);
-        console.log(titlesAndSummaries);
+        console.log("titlesAndSummaries in Server.js: ", titlesAndSummaries);
+        
         // console.log("Sending Response:", JSON.stringify({
         //     data: scrapedData,
         //     summary: summary,
