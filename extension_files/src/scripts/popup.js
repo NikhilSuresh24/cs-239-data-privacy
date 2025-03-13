@@ -1,6 +1,7 @@
 console.log("This is a popup!");
 
 function loadSummaryUI(summary) {
+    console.log("popup.js: ");
     // Check if we're in the content script (wrapper exists) or popup
     const container = document.getElementById('privacy-notice-wrapper')?.querySelector('.container') || 
                      document.querySelector(".container");
@@ -15,19 +16,19 @@ function loadSummaryUI(summary) {
     `;
 
     // Generate rating sections dynamically
-    summary.forEach(([title, one_liner, rating, description], index) => {
-        console.log("ratings: ", title, description, rating)
+    summary.forEach((item, index) => {
+        console.log("ratings: ", item.title, item.summary, item.rating, item.learn_more, item.references)
         ratingDescriptions = ["Horrible", "Bad", "Decent", "Good", "Excellent"];
         html += `
             <div class="rating-section">
                 <div class="rating-info">
-                    <h3>${title}</h3>
-                    <p class="one-liner" id="one-liner-${index}">${one_liner}</p>
-                    <p class="description" id="desc-${index}" style="display: none;">${description}</p>
-                    <button class="learn-more" data-index="${index}">Learn More</button>
+                    <h3>${item.title}</h3>
+                    <p class="one-liner" id="one-liner-${item.index}">${item.summary}</p>
+                    <p class="description" id="desc-${item.index}" style="display: none;">${item.learn_more}</p>
+                    <button class="learn-more" data-index="${item.index}">Learn More</button>
                 </div>
-                <div class="stars" data-rating="${rating}"></div>
-                <p class=rating-desc id="rating-desc-${index}">${ratingDescriptions[rating - 1]}</p>
+                <div class="stars" data-rating="${item.rating}"></div>
+                <p class=rating-desc id="rating-desc-${item.index}">${ratingDescriptions[item.rating - 1]}</p>
             </div>
         `;
     });
@@ -65,7 +66,7 @@ function loadSummaryUI(summary) {
     });
 
 
-    // Render stars
+    // Render color rarings
     document.querySelectorAll(".stars").forEach(container => {
         const rating = parseInt(container.getAttribute("data-rating"), 10);
         console.log("RATING: ", rating)
@@ -104,6 +105,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 chrome.storage.onChanged.addListener((changes) => {
+    console.log("popup.js: changes: ");
     if (changes.summary_list) {
         loadSummaryUI(changes.summary_list.newValue);
     }

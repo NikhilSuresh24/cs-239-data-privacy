@@ -101,7 +101,6 @@ async function analyzeSummary(summary) {
                 'Content-Type': 'application/json'
             }
         });
-        console.log("response.data.choices[0].message.content in analyzeSummary: summarizer.js", response.data.choices[0].message.content);
         return response.data.choices[0].message.content;
     } catch (error) {
         console.error('Error calling OpenRouter API:', error);
