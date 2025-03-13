@@ -1,7 +1,7 @@
 // summarizer.js
 const axios = require('axios');
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 const schema = {
@@ -12,9 +12,10 @@ const schema = {
         "title": { "type": "string" },
         "summary": { "type": "string" },
         "rating": { "type": "string" },
-        "learn_more": { "type": "string" }
+        "learn_more": { "type": "string" },
+        "references": { "type": "string" }
       },
-      "required": ["title", "summary", "rating", "learn_more"]
+      "required": ["title", "summary", "rating", "learn_more", "references"]
     }
   }
 
@@ -30,8 +31,8 @@ async function getInitialSummary(content) {
                     information about what is in the policy and the implications of the policy on user privacy.
 
                 Sections to analyze:
-                1. Access to Medical/Financial Data: Summarize how the company handles access to sensitive medical or financial information.
-                2. Data Storage: Explain how and where the company stores user data.
+                1. Access to Medical/Financial Data: Summarize how the company will handle access to sensitive medical or financial information.
+                2. Data Storage: Explain how and where the company stores user data and the security measures they take.
                 3. Data Sharing with Third Parties: Describe the company's practices for sharing data with third parties or other companies.
 
                 Privacy Policy Content:
@@ -39,7 +40,8 @@ async function getInitialSummary(content) {
 
                 Please format each section as follows:
                 **Section Title**
-                Summary: [Your 4 sentence summary]` }
+                Summary: [Your 4 sentence summary]
+                References: [For each section, provide 2-4 short (75 character max) direct quotes from the policy that support the summary]`}
             ]
         }, {
             headers: {
@@ -68,21 +70,23 @@ async function analyzeSummary(summary) {
                 Summaries:
                 ${summary}
 
-                Format your response like this in accordance to the schema:
+                Format your response like this in accordance to the schema, and DO NOT CHANGE THE REFERENCES FROM THE ORIGINAL SUMMARY:
                 **Access to Medical/Financial Data**
                 Summary: * [1 to 75 character sentence with the most crucial information]
                 Privacy Rating: [1-5]
                 *Learn_More*: [The original provided information for Access to Medical/Financial Data]
+                References: [List of references to the policy that support the summary]
 
                 **Data Storage**
                 Summary: * [1 to 75 character sentence with the most crucial information]
                 Privacy Rating: [1-5]
                 *Learn_More*: [The original provided information for Data Storage]
-
+                References: [List of references to the policy that support the summary]
                 **Data Sharing with Third Parties**
                 Summary: * [1 to 75 character sentence with the most crucial information]
                 Privacy Rating: [1-5]
-                *Learn_More*: [The original provided information for Data Sharing with Third Parties]` }
+                *Learn_More*: [The original provided information for Data Sharing with Third Parties]
+                References: [List of references to the policy that support the summary]` }
             ],
             "response_format": {
                 "type": "json_schema",
@@ -97,7 +101,7 @@ async function analyzeSummary(summary) {
                 'Content-Type': 'application/json'
             }
         });
-        
+        console.log("response.data.choices[0].message.content in analyzeSummary: summarizer.js", response.data.choices[0].message.content);
         return response.data.choices[0].message.content;
     } catch (error) {
         console.error('Error calling OpenRouter API:', error);
@@ -113,21 +117,7 @@ async function summarizeContent(content) {
     return analyzedSummary;
 }
 
-function splitSummary(summary) {
-    const regex = /\*\*(.*?)\*\*\nSummary: \* (.*?)\nPrivacy Rating: (\d)\nLearn More: ([\s\S]*?)(?=\n\n\*\*|$)/g;
-    const matches = [...summary.matchAll(regex)];
-    console.log("matches in splitSummary: summarizer.js", matches);
-    return matches.map(match => [
-        match[1].trim(),  // Title
-        match[2].trim(),  // Summary
-        parseInt(match[3]),  // Privacy Rating
-        match[4].trim()  // Learn More
-    ]);
-}
-
-
-
-module.exports = { summarizeContent, splitSummary };
+module.exports = { summarizeContent };
 
 
 
