@@ -1,0 +1,55 @@
+{
+  "name": "PrivacyPal",
+  "description": "Your Pal For Everything Privacy",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content.js-loader-DGL54XdW.js",
+        "assets/popup.js-loader-BzG9GxbV.js"
+      ],
+      "matches": [
+        "https://www.instagram.com/*",
+        "https://www.facebook.com/*",
+        "https://www.tiktok.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "logo.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "*.html",
+        "*.js",
+        "*.css"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/*",
+        "https://www.instagram.com/*",
+        "https://www.tiktok.com/*"
+      ],
+      "resources": [
+        "assets/content.js-BxSLiZ_x.js",
+        "assets/popup.js-DNCOJ1yC.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}
