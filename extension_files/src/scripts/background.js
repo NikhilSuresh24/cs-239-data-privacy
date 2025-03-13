@@ -14,6 +14,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 console.log("Scraped data and summary received:", data);
                 console.log('sum list: ', data.summary_list)
                 // Store the data
+
+                
                 chrome.storage.local.set({ 
                     'scrapedData': data.data,
                     'summary': data.summary, 
