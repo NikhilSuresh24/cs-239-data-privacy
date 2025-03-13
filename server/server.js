@@ -22,8 +22,6 @@ app.get("/scrape", async (req, res) => {
 
         // Generate summary
         const summary = await summarizeContent(scrapedData);
-        const titlesAndSummaries = splitSummary(summary);
-        console.log("titlesAndSummaries in Server.js: ", titlesAndSummaries);
         
         // console.log("Sending Response:", JSON.stringify({
         //     data: scrapedData,
@@ -31,9 +29,7 @@ app.get("/scrape", async (req, res) => {
         //     summary_list: titlesAndSummaries
         // }, null, 2));
         
-        
-
-        res.json({ data: scrapedData, summary: summary, summary_list: titlesAndSummaries });
+        res.json({ data: scrapedData, summary_list: summary });
 
         await browser.close();
 
