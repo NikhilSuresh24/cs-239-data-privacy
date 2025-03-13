@@ -1,37 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Popup from './pages/Popup'
+import { MemoryRouter, Routes, Route, useNavigate } from "react-router";
+import { useEffect } from "react";
+import Home from "./pages/Home";
+import TargetSiteView from "./pages/LoadingData";
+import DataView from "./pages/DataPopup";
+import LoadingData from "./pages/Home";
 
-function App() {
-  const [count, setCount] = useState(0)
+function AppContent() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message.action === "redirect") {
+        navigate(message.path);
+      }
+    });
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <Popup/>
-    </>
-  )
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/target" element={<TargetSiteView />} />
+        <Route path="/loading" element={<LoadingData />} />
+        <Route path="/data" element={<DataView />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <MemoryRouter>
+      <AppContent />
+    </MemoryRouter>
+  );
+}
+
+export default App;

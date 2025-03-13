@@ -1,12 +1,31 @@
 {
+  "name": "PrivacyPal",
+  "description": "Your Pal For Everything Privacy",
+  "version": "1.0",
   "manifest_version": 3,
-  "name": "Privacy Pal 2.0",
-  "version": "1.0.0",
-  "description": "Privacy Pal built with Vite and React this time",
+  "background": {
+    "service_worker": "src/scripts/background.js"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.instagram.com/*", 
+                "https://www.facebook.com/*", 
+                "https://www.tiktok.com/*"], 
+      "js": ["src/scripts/content.js",
+              "src/scripts/popup.js"
+            ]       
+    }
+  ],
   "action": {
     "default_popup": "index.html",
     "default_icon": "logo.png"
   },
-  "permissions": [],
-  "host_permissions": []
+  "web_accessible_resources": [
+    {
+      "resources": ["*.html", "*.js", "*.css"],
+      "matches": ["<all_urls>"]
+  }]
 }
