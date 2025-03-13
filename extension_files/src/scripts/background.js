@@ -18,7 +18,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 
                 chrome.storage.local.set({ 
                     'scrapedData': data.data,
-                    'summary': data.summary, 
                     'summary_list': data.summary_list
                 });
 
