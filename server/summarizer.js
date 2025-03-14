@@ -11,7 +11,7 @@ const schema = {
       "properties": {
         "title": { "type": "string" },
         "summary": { "type": "string" },
-        "rating": { "type": "string" },
+        "rating": { "type": "int" },
         "learn_more": { "type": "string" },
         "references": { "type": "string" }
       },
@@ -70,23 +70,8 @@ async function analyzeSummary(summary) {
                 Summaries:
                 ${summary}
 
-                Format your response like this in accordance to the schema, and DO NOT CHANGE THE REFERENCES FROM THE ORIGINAL SUMMARY:
-                **Access to Medical/Financial Data**
-                Summary: * [1 to 75 character sentence with the most crucial information]
-                Privacy Rating: [1-5]
-                *Learn_More*: [The original provided information for Access to Medical/Financial Data]
-                References: [List of references to the policy that support the summary]
-
-                **Data Storage**
-                Summary: * [1 to 75 character sentence with the most crucial information]
-                Privacy Rating: [1-5]
-                *Learn_More*: [The original provided information for Data Storage]
-                References: [List of references to the policy that support the summary]
-                **Data Sharing with Third Parties**
-                Summary: * [1 to 75 character sentence with the most crucial information]
-                Privacy Rating: [1-5]
-                *Learn_More*: [The original provided information for Data Sharing with Third Parties]
-                References: [List of references to the policy that support the summary]` }
+                Format your response in accordance to the schema, and DO NOT CHANGE THE REFERENCES FROM THE ORIGINAL SUMMARY. DO remove the references from the end of the intial summary.
+                ` }
             ],
             "response_format": {
                 "type": "json_schema",
