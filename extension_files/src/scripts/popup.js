@@ -1,11 +1,12 @@
 console.log("This is a popup!");
 
 function loadSummaryUI(summary) {
-    console.log("popup.js: ");
     // Check if we're in the content script (wrapper exists) or popup
     const container = document.getElementById('privacy-notice-wrapper')?.querySelector('.container') || 
                      document.querySelector(".container");
+              
                      
+    console.log("summary type: ", typeof summary);
     console.log("summary loading: ", summary);
     // Create main UI structure
     let html = `
@@ -23,12 +24,12 @@ function loadSummaryUI(summary) {
             <div class="rating-section">
                 <div class="rating-info">
                     <h3>${item.title}</h3>
-                    <p class="one-liner" id="one-liner-${item.index}">${item.summary}</p>
-                    <p class="description" id="desc-${item.index}" style="display: none;">${item.learn_more}</p>
-                    <button class="learn-more" data-index="${item.index}">Learn More</button>
+                    <p class="one-liner" id="one-liner-${index}">${item.summary}</p>
+                    <p class="description" id="desc-${index}" style="display: none;">${item.learn_more}</p>
+                    <button class="learn-more" data-index="${index}">Learn More</button>
                 </div>
                 <div class="stars" data-rating="${item.rating}"></div>
-                <p class=rating-desc id="rating-desc-${item.index}">${ratingDescriptions[item.rating - 1]}</p>
+                <p class=rating-desc id="rating-desc-${index}">${ratingDescriptions[item.rating - 1]}</p>
             </div>
         `;
     });
@@ -105,7 +106,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 chrome.storage.onChanged.addListener((changes) => {
-    console.log("popup.js: changes: ");
     if (changes.summary_list) {
         loadSummaryUI(changes.summary_list.newValue);
     }
