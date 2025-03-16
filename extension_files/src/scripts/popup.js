@@ -2,12 +2,14 @@ console.log("This is a popup!");
 
 function loadSummaryUI(summary) {
     // Check if we're in the content script (wrapper exists) or popup
+
+
+    const jsonData = JSON.parse(summary);
+
     const container = document.getElementById('privacy-notice-wrapper')?.querySelector('.container') || 
                      document.querySelector(".container");
               
                      
-    console.log("summary type: ", typeof summary);
-    console.log("summary loading: ", summary);
     // Create main UI structure
     let html = `
         <div class="header">
@@ -16,8 +18,8 @@ function loadSummaryUI(summary) {
         </div>
     `;
 
-    // Generate rating sections dynamically
-    summary.forEach((item, index) => {
+    // Generate rating sections dynamicall
+    jsonData.forEach((item, index) => {
         console.log("ratings: ", item.title, item.summary, item.rating, item.learn_more, item.references)
         ratingDescriptions = ["Horrible", "Bad", "Decent", "Good", "Excellent"];
         html += `

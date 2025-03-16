@@ -13,11 +13,27 @@ const schema = {
         "summary": { "type": "string" },
         "rating": { "type": "int" },
         "learn_more": { "type": "string" },
-        "references": { "type": "string" }
+        "references": { "type": "array", "items": { "type": "string" } }
       },
       "required": ["title", "summary", "rating", "learn_more", "references"]
     }
-  }
+  };
+
+  const schema2 = {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "references": { 
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["summary", "references"]
+    }
+  };
 
 //moved commented function to bottom
 
@@ -39,16 +55,24 @@ async function getInitialSummary(content) {
                 ${content}
 
                 Please format each section as follows:
-                **Section Title**
+                **Section Title** (one of: Access to Medical/Financial Data, Data Storage, Data Sharing with Third Parties)
                 Summary: [Your 4 sentence summary]
                 References: [For each section, provide 2-4 short (75 character max) direct quotes from the policy that support the summary]`}
-            ]
+            ],
+            "response_format": {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "privacy_policy_initial",
+                    "schema": schema2
+                }
+            }
         }, {
             headers: {
                 'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
                 'Content-Type': 'application/json'
             }
         });
+        // console.log("response.data.choices[0].message.content in getInitialSummary: summarizer.js", response.data.choices[0].message.content);  
         return response.data.choices[0].message.content;
     } catch (error) {
         console.error('Error calling OpenRouter API:', error);
@@ -62,15 +86,21 @@ async function analyzeSummary(summary) {
             model: 'google/gemini-2.0-flash-lite-001',
             messages: [
                 { role: 'system', content: 'You analyze privacy policy summaries and identify key concerns across multiple areas. Your goal is to make the policy accessible to laymen while remaining specific.' },
-                { role: 'user', content: `Analyze the following summaries for three areas of data handling and provide a 1 sentence bullet point for each area outlining what policy is most negatively impactful to individuals privacy. Then, rate each area on a scale of 1-5 (1 meaning the policy is highly negatively impactful to privacy, 5 meaning the policy is least negatively impactful to privacy). For reference, consider the following examples:
-                
-                Example 1: "The company shares user data with third parties without explicit consent." (Rating: 1)
-                Example 2: "The company stores user data securely but does not specify how long it is kept." (Rating: 3)
+                { role: 'user', content: `Analyze the following summaries for three areas of data handling and provide a 1 sentence bullet point for each area outlining what policy is most negatively impactful to individuals privacy. Then, rate each area on a scale of 1-5 based on the following scale:
+                    1 - the policy is very vague and not explicit about data handling practices. if it is explicit, their practices are very negative for user data privacy.
+                    2 - the policy is vague and not explicit about data handling practices. if it is explicit, their practices are negative for user data privacy.
+                    3 - the policy is somewhat explicit about data handling practices and/or it is somewhat negative for users.
+                    4 - the policy is explicit about data handling practices but those practices are not necessarily good at maintaining data privacy and security.
+                    5 - the policy is explicit about data handling practices and those practices are good at maintaining data privacy and security.
 
                 Summaries:
                 ${summary}
 
-                Format your response in accordance to the schema, and DO NOT CHANGE THE REFERENCES FROM THE ORIGINAL SUMMARY. DO remove the references from the end of the intial summary.
+                Format your response in accordance to the schema provided.
+                the references should be taken from the summary provided and returned in the references field
+                the summary field should be the concise single sentence, and the learn_more should be the inital summary you were given with references removed. 
+                the learn_more SHOULD ALWAYS BE LONGER THAN SUMMARY.
+                
                 ` }
             ],
             "response_format": {
