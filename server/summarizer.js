@@ -1,7 +1,7 @@
 // summarizer.js
 const axios = require('axios');
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 const schema = {

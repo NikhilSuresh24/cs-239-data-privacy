@@ -17,18 +17,13 @@ app.get("/scrape", async (req, res) => {
         const page = await browser.newPage();
         
         await page.goto(url, { waitUntil: "domcontentloaded" }); // Load page
-        
+
+
         const scrapedData = await page.evaluate(() => document.body.innerText); 
 
         // Generate summary
         const summary = await summarizeContent(scrapedData);
-        
-        // console.log("Sending Response:", JSON.stringify({
-        //     data: scrapedData,
-        //     summary: summary,
-        //     summary_list: titlesAndSummaries
-        // }, null, 2));
-        
+
         res.json({ data: scrapedData, summary_list: summary });
 
         await browser.close();
