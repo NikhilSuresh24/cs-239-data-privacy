@@ -122,6 +122,22 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.references {
+    background-color: white;
+    color: #007bff;
+    border: none;
+    padding: 10px;
+    font-size: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0px;
+    transition: background-color 0.3s ease;
+}
+
+.references:hover {
+    background-color: #00000016;
+}
+
 .learn-more:hover {
     background-color: #0056b3;
 }

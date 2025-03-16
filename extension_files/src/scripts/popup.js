@@ -21,13 +21,20 @@ function loadSummaryUI(summary) {
     jsonData.forEach((item, index) => {
         console.log("ratings: ", item.title, item.summary, item.rating, item.learn_more, item.references)
         ratingDescriptions = ["Horrible", "Bad", "Decent", "Good", "Excellent"];
+        let referencesHTML = item.references.map(ref => `<li>"${ref}"</li>`).join(''); // join to combine them into one string
+        
+        console.log("referencesHTML: ", referencesHTML);
         html += `
             <div class="rating-section">
                 <div class="rating-info">
                     <h3>${item.title}</h3>
                     <p class="one-liner" id="one-liner-${index}">${item.summary}</p>
                     <p class="description" id="desc-${index}" style="display: none;">${item.learn_more}</p>
-                    <button class="learn-more" data-index="${index}">Learn More</button>
+                    <ul class="description" id="refer-${index}" style="display: none; list-style-type: disc">${referencesHTML}</ul>
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%;">
+                        <button class="learn-more" data-index="${index}">Learn More</button>
+                        <button class="references" data-index="${index}">References</button>
+                    </div
                 </div>
                 <div class="stars" data-rating="${item.rating}"></div>
                 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; width: 100%;">
@@ -66,6 +73,24 @@ function loadSummaryUI(summary) {
                 descriptionElem.style.display = "none";
                 oneLinerElem.style.display = "block";
                 event.target.textContent = "Learn More";
+            }
+        });
+    });
+
+    document.querySelectorAll(".references").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const index = event.target.getAttribute("data-index");
+            const descriptionElem = document.getElementById(`refer-${index}`);
+            const oneLinerElem = document.getElementById(`one-liner-${index}`);
+            
+            if (descriptionElem.style.display === "none") {
+                descriptionElem.style.display = "block";
+                oneLinerElem.style.display = "none";
+                event.target.textContent = "Hide";
+            } else {
+                descriptionElem.style.display = "none";
+                oneLinerElem.style.display = "block";
+                event.target.textContent = "References";
             }
         });
     });
