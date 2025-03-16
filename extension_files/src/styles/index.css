@@ -166,10 +166,10 @@ body {
 }
 
 .rating-desc {
-    text-align: center;  /* Center the text */
+    *text-align: center;  /* Center the text */
     font-weight: bold;   /* Make the text bold */
     font-size: 16px;     /* Adjust the font size as needed */
     color: #333;         /* Set a nice color for the text */
     margin: 5px 0px;    /* Add space between the bar and the text */
-    width: 100%;
+    /*width: 100%; */
 }
