@@ -12,7 +12,7 @@ ANSWER: Evaluation notes can be found in the file: evaluation_notes.md</br>
 > For any qualitative data where you cannot easily remember the details of the results, a thematic analysis is required. When you conduct a thematic analysis, include your codebook.
 > For any quantitative data, submit a script for analysis + your data. Recommendation: Create a notebook for your analysis. Someone should be able to run your notebook to reproduce your results. 
 
-ANSWER: Evaluation analysis of the interviews and quantitative data can be found in the file: Evaluation_Result_Analysis.pdf
+ANSWER: Evaluation analysis of the interviews and quantitative data can be found in the file: Evaluation_Result_Analysis.md
 
 The python script analyzing the quantitative data can be found in the file:  evaluation_analysis.py
 
