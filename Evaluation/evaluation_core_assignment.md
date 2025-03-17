@@ -5,9 +5,10 @@
 [+5] Evaluate your system with at least 10 participants. Write and submit 0.5-1p of notes for each participant. 
 </br>[+1] DEPTH: Evaluate with 5 more participants. Feel free to make changes to your system between the first and second round of evaluation. If you do make changes, summarize the changes you made and why. 
 
-ANSWER: Evaluation notes can be found in the file: </br> After your evaluation [+4]
+ANSWER: Evaluation notes can be found in the file: evaluation_notes.md</br> 
 
-> #### [+4] Analyze your data and write up your key findings. The findings should be about 0.5-1p for each motivating question and any other interesting findings.  
+> #### After your evaluation [+4]
+> [+4] Analyze your data and write up your key findings. The findings should be about 0.5-1p for each motivating question and any other interesting findings.  
 > For any qualitative data where you cannot easily remember the details of the results, a thematic analysis is required. When you conduct a thematic analysis, include your codebook.
 > For any quantitative data, submit a script for analysis + your data. Recommendation: Create a notebook for your analysis. Someone should be able to run your notebook to reproduce your results. 
 
